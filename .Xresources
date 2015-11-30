@@ -1,0 +1,8 @@
+! my customisations
+XTerm*renderFont: true
+XTerm*faceName: terminus
+xterm*font: terminus-10
+xterm*saveLines: 2000
+xterm*termName: xterm-color
+xterm*eightBitInput: false
+xterm*faceSize: 9
