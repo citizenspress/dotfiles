@@ -9,6 +9,8 @@
 #
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
 
+# RENAME FILE ~/.i3/config
+
 set $mod Mod4
 #exec "compton --backend glx --vsync opengl-swc --paint-on-overlay"
 #exec compton --backend glx --vsync opengl 
