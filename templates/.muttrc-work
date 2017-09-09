@@ -1,0 +1,111 @@
+# Account Work
+
+# for composing html email from Org-mode or Markdown
+# Alt-m for a when using Markdown markup language, Alt-o for and Org-mode markup
+macro compose \eo "F pandoc -s -S -f org -t html \ny^T^Utext/html; charset=utf-8\n"
+macro compose \em "F pandoc -s -S -f markdown -t html \ny^T^Utext/html; charset=utf-8\n"
+set wait_key=no
+
+# press "c" to change folders
+macro index 'c' '<change-folder>?<change-dir><home>^K=<enter>'
+
+# hit <Shift>-g to launch mbsync from inside Mutt to check for new mail.
+macro index G "<shell-escape>mbsync work-inbox<enter>"
+
+
+## ACCOUNT work
+
+# Use "Maildir" file storage for emails (efficient email storage)
+set mbox_type=Maildir
+# Mail stored in .email folder in your home directory
+set folder="~/.email"
+# this sets Folders for your inbox, draft, and sent email storage 
+set spoolfile="~/.email/INBOX"
+set postponed="~/.email/Drafts"
+set record=+Sent
+
+
+# use Emacs as your editor
+set editor = "emacsclient -a emacs"
+# Smtp password
+set smtp_pass= "password"
+set ssl_starttls = yes
+set smtp_url = "smtp://username@example.com:587"
+# Your "from" email address
+set from="your@email.address"
+set realname="Your Name"
+
+# Sane wrapping and markup for replies
+set smart_wrap = yes
+set markers=no
+
+# Autoview html emails as plain text and set sane headers for mail view
+auto_view text/html
+ignore headers *
+unignore headers from to subject date cc
+hdr_order from to cc subject date
+
+
+set timeout=60    #Check for mail every minute
+set mail_check=5
+
+# make sorting reverse date sort for mail list view
+set sort= reverse-date
+set strict_threads = yes
+#set sort_browser = last-date
+set sort_aux = reverse-last-date-received
+unset collapse_unread
+bind index - collapse-thread
+bind index _ collapse-all
+
+
+set beep=yes
+set beep_new = yes
+
+
+# color patterns for mutt
+
+color normal white default # normal text
+color indicator yellow default # actual message
+color tree brightmagenta default # thread arrows
+color status yellow default # status line
+color error brightred default # errors
+color message magenta default # info messages
+color signature magenta default # signature
+color attachment brightyellow red # MIME attachments
+color search brightyellow red # search matches
+color tilde brightmagenta default # ~ at bottom of msg
+color markers red default # + at beginning of wrapped lines
+color hdrdefault cyan default # default header lines
+color bold red default # hiliting bold patterns in body
+color underline green default # hiliting underlined patterns in body
+color quoted cyan default # quoted text
+color quoted1 magenta default
+color quoted2 red default
+color quoted3 green default
+color quoted4 magenta default
+color quoted5 cyan default
+color quoted6 magenta default
+color quoted7 red default
+color quoted8 green default
+color quoted9 cyan default
+color body cyan default "((ftp|http|https)://|news:)[^ >)\"\t]+"
+color body cyan default "[-a-z_0-9.+]+@[-a-z_0-9.]+"
+color body red default "(^| )\\*[-a-z0-9*]+\\*[,.?]?[ \n]"
+color body green default "(^| )_[-a-z0-9_]+_[,.?]?[\n]"
+color body red default "(^| )\\*[-a-z0-9*]+\\*[,.?]?[ \n]"
+color body green default "(^| )_[-a-z0-9_]+_[,.?]?[ \n]"
+color index cyan default ~F # Flagged
+color index brightred default ~N # New
+color index green default ~O # Old
+color index magenta default ~T # Tagged
+color index cyan default ~D # Deleted
+
+
+
+# Use <TAB> to auto fill when typing an email address in the "To:" or "CC" fields
+# Only works if you have set-up Mail Utilities (mu) properly.
+set query_command = "mu cfind --format=mutt-ab '%s'"
+macro generic,index,pager \ca "<shell-escape>abook<return>" "launch abook"
+macro index,pager A "<pipe-message>abook --add-email-quiet<return>" "add the sender address to abook"
+bind editor <Tab> complete-query

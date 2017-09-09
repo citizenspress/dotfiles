@@ -1,0 +1,27 @@
+# Make sure you have copied the ".mailcap" file to your home directory.
+# ".mailcap" tells Mutt what programs it should be using.
+
+# Account work
+
+source ~/.muttrc-work
+folder-hook 'email' 'source ~/.muttrc-work'
+# This makes sure you can switch to your personal account
+folder-hook 'imaps://imap.personalaccount.com' 'source ~/.muttrc-personal'
+
+# This outlines where your mail accounts store their mail
+# Work
+mailboxes ~/.email
+# Personal IMAP account
+mailboxes imaps://imap.personalaccount.com
+
+# Set plain text, then Enriched as the default, and then HTML
+alternative_order text/plain text/enriched text/html
+
+# Auto view html if it is the only thing going
+auto_view text/html
+
+# Again setting the Pandoc macros when composing html email (alt-o) (alt-m)
+macro compose \eo "F pandoc -s -S -f org -t html \ny^T^Utext/html; charset=us-ascii\n"
+macro compose \em "F pandoc -s -S -f markdown -t html \ny^T^Utext/html; charset=us-ascii\n"
+set wait_key=no
+

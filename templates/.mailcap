@@ -1,0 +1,4 @@
+
+text/html; w3m -I %{charset} -T text/html; copiousoutput;
+application/vnd.openxmlformats-officedocument.wordprocessingml.document; cat %s|/usr/bin/docx2txt; copiousoutput
+application/msword ; antiword %s ; copiousoutput

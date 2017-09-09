@@ -1,0 +1,38 @@
+
+# Setting up mbsync to get your work email
+
+SyncState * 
+Create Both
+Expunge Both
+
+# Work email account settings
+
+IMAPAccount work
+Host imap.example.com
+Port 993
+User your@email.address
+Pass "your password"
+UseIMAPS yes
+
+# Where Mutt will store your email
+
+IMAPStore work-remote
+
+Account work
+
+MaildirStore work-local
+Path ~/.email/
+Inbox ~/.email/INBOX
+
+# Setting sane channels for your email
+
+Channel work-inbox
+Master :work-remote:
+Slave :work-local:
+Patterns "INBOX"
+
+# Make sure everything is in sync
+
+Create Both
+Expunge Both
+SyncState *

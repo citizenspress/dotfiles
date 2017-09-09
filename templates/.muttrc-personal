@@ -1,0 +1,141 @@
+# Account personal
+
+# source ~/.muttrc-cp
+# folder-hook .email-cp/ 'source ~/.muttrc-cp'
+
+# The "^" key forces Mutt to fetch emaail
+
+bind index "^" imap-fetch-mail
+
+# Pandoc triggers to generate HTML email from Org or Markdown
+# First one is Org setting M-o (alt-o) as the trigger for Org markup files
+# Second one is Markdown setting M-m (alt-m) as the trigger for Markdown files 
+
+
+macro compose \eo "F pandoc -s -S -f org -t html \ny^T^Utext/html; charset=utf-8\n"
+macro compose \em "F pandoc -s -S -f markdown -t html \ny^T^Utext/html; charset=utf-8\n"
+set wait_key=no
+
+# In the list of emails, hit "c" to change the folder
+
+macro index 'c' '<change-folder>?<change-dir><home>^K=<enter>'
+
+# mu search:
+# If you have install Mail Utilities (mu) correctly, you can remove the "#" below and set <alt>-f 
+# to start a search of your mail using mu. 
+
+
+# macro index "<Esc>f" "<enter-command>unset wait_key<enter><shell-escape>read -p'mu query: ' x; \ 
+# mu find --clearlinks --linksdir ~/Mail/mu-search --format links \$x<enter>\ 
+# <change-folder-readonly>~/Mail/mu-search\n" "mu find"
+# macro index "<Esc>s" "<change-folder-readonly>~/Mail/mu-search\n" "display mu-find results"
+
+
+# If using mbsync not with cron, map <shift>-g to force mbsync to check for new mail
+# macro index G "<shell-escape>mbsync cupe-inbox<enter>"
+
+
+## ACCOUNT Personal
+# IMAP account setup
+# set folder = "imaps://imap.example.com:993"
+# set imap_user = "username"
+# set imap_pass = "password"
+# # Only check subscribed IMAP folders INBOX, etc.
+# set imap_check_subscribed
+# Cache headers so you do not have to load all of them each time you check your mail
+# set header_cache = "~/.mutt/cache/headers
+# # set the file where new mail is checked
+# set spoolfile="+INBOX"
+# # set draft folder
+# set postponed="~/.email-cp/Drafts"
+# # set Sent folder
+# set record=+Sent
+
+
+# # Make Emacs the editor for your email
+set editor = "emacsclient -a emacs"
+
+# # Sending your email setup
+set smtp_pass= "email password"
+# # set ssl_starttls = yes
+set smtp_url = "smtps://username@smtp.example.com:465"
+set from="your@email.address"
+set realname="Your Name"
+
+# Set smart wrapping for email sending
+set smart_wrap = yes
+# Do not markup replies
+set markers=no
+
+# If HTML email, show the html converted into plain text as default
+auto_view text/html
+
+# This sets sane headers when looking at a single email
+ignore headers *
+unignore headers from to subject date cc
+hdr_order from to cc subject date
+
+# This checks email every minute from the mbsync folder
+set timeout=60    #Check for mail every minute
+set mail_check=5
+
+# This sets the sorting and threading in the email list view
+set sort= reverse-date
+set strict_threads = yes
+# set sort_browser = last-date
+set sort_aux = reverse-last-date-received
+unset collapse_unread
+bind index - collapse-thread
+bind index _ collapse-all
+
+
+# setting noises and notifications
+set beep=yes
+set beep_new = yes
+
+
+# color patterns for mutt
+
+color normal white default # normal text
+color indicator yellow default # actual message
+color tree brightmagenta default # thread arrows
+color status yellow default # status line
+color error brightred default # errors
+color message magenta default # info messages
+color signature magenta default # signature
+color attachment brightyellow red # MIME attachments
+color search brightyellow red # search matches
+color tilde brightmagenta default # ~ at bottom of msg
+color markers red default # + at beginning of wrapped lines
+color hdrdefault cyan default # default header lines
+color bold red default # hiliting bold patterns in body
+color underline green default # hiliting underlined patterns in body
+color quoted cyan default # quoted text
+color quoted1 magenta default
+color quoted2 red default
+color quoted3 green default
+color quoted4 magenta default
+color quoted5 cyan default
+color quoted6 magenta default
+color quoted7 red default
+color quoted8 green default
+color quoted9 cyan default
+color body cyan default "((ftp|http|https)://|news:)[^ >)\"\t]+"
+color body cyan default "[-a-z_0-9.+]+@[-a-z_0-9.]+"
+color body red default "(^| )\\*[-a-z0-9*]+\\*[,.?]?[ \n]"
+color body green default "(^| )_[-a-z0-9_]+_[,.?]?[\n]"
+color body red default "(^| )\\*[-a-z0-9*]+\\*[,.?]?[ \n]"
+color body green default "(^| )_[-a-z0-9_]+_[,.?]?[ \n]"
+color index cyan default ~F # Flagged
+color index brightred default ~N # New
+color index green default ~O # Old
+color index magenta default ~T # Tagged
+color index cyan default ~D # Deleted
+
+
+# Hitting <TAB> when filling a new email address in "To" will auto fill the email from 
+# an mu find query of all your emails you have sent or received (if you have set-up Mail Utilities).
+set query_command = "mu cfind --format=mutt-ab '%s'"
+macro generic,index,pager \ca "<shell-escape>abook<return>" "launch abook"
+macro index,pager A "<pipe-message>abook --add-email-quiet<return>" "add the sender address to abook"
+bind editor <Tab> complete-query
