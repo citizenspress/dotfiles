@@ -1,0 +1,27 @@
+
+#+LaTeX_HEADER: \usepackage[T1]{fontenc}
+#+LaTeX_HEADER: \usepackage{mathpazo}
+#+LaTeX_HEADER: \linespread{1.15}
+#+LaTeX_HEADER: \usepackage[scaled]{helvet}
+#+LaTeX_HEADER: \usepackage{courier}
+
+
+#+LaTeX_HEADER: \usepackage[activate={true,nocompatibility},final,tracking=true,kerning=true,spacing=true,factor=1100,stretch=10,shrink=10]{microtype}
+
+#+LaTeX_HEADER: \usepackage{color}
+#+LATEX_HEADER: \usepackage{hyperref}
+#+LATEX_HEADER: \hypersetup{colorlinks   = true}
+
+#+LATEX_HEADER: \usepackage{parskip}
+#+LATEX_HEADER: \setlength{\parindent}{0in}
+#+LATEX_HEADER: \usepackage{fullpage}
+
+
+#+TITLE: This is the title of the document
+#+AUTHOR: This is your name
+
+
+* First Section
+
+This should create (if you have LaTeX installed properly) a very nice layout for org-mode latex export.
+
