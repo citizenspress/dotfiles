@@ -14,6 +14,8 @@
 
 (prefer-coding-system locale-coding-system)
 
+(setq org-export-with-smart-quotes t)
+
 (transient-mark-mode 1)
 
 (when (not window-system)
